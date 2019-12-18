@@ -46,7 +46,7 @@ with open("./election_data.csv", 'r') as inputfile:
         # Code adapted from a solution suggested here: https://stackoverflow.com/questions/5306756/how-to-print-a-percentage-value-in-python
         d['pct'] = str(d['pct'])
     
-    print(results)
+    # print(results)
 
     sorted_results = []
     sorted_results = sorted(results, key = lambda i: i['votes'], reverse=True) # Adapted from https://www.geeksforgeeks.org/ways-sort-list-dictionaries-values-python-using-lambda-function/

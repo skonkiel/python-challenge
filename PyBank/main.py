@@ -1,6 +1,5 @@
 import csv
 from statistics import mean
-from collections import OrderedDict
 
 with open("./budget_data.csv", 'r') as inputfile:
     reader = csv.reader(inputfile, delimiter=',')
@@ -43,7 +42,6 @@ with open("./budget_data.csv", 'r') as inputfile:
 
     # The net total amount of "Profit/Losses" over the entire period
     net_profit = sum(p_l)
-    # print(net_profit)
 
     # The greatest increase in profits (date and amount) over the entire period
     # The greatest decrease in losses (date and amount) over the entire period
