@@ -1,7 +1,0 @@
-Financial analysis
-------------------
-Months: 86
-Net total amount of profit/loss over entire period: $-196785
-Average profit / loss over entire period (profit/loss per month): $-2289
-Greatest increase: Feb-2012, $1170593
-Greatest decrease: Sep-2013, $-1196225
