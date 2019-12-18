@@ -6,90 +6,82 @@ with open("./election_data.csv", 'r') as inputfile:
 
     # Skip header in file
     csv_header = next(reader)
-    
-    vote = {}
-    pct_vote = {}
+    # ['Voter ID', 'County', 'Candidate']
+
+    results = []
     total_votes = 0
-    master = {}
-  
-    # Tally votes for each candidate
+
+    k = {'name': 'Khan', 'votes': 0}
+    l = {'name' : 'Li', 'votes': 0}
+    c = {'name': 'Correy', 'votes': 0}
+    o = {'name': "O\'Tooley", 'votes': 0}
+
+    # Count votes for each candidate
     for row in reader:
-        candidate = row[2]
-        if candidate in vote:
-            vote[candidate] += 1
-        else:
-            vote[candidate] = 1
-    
-#     vote = {k: v for k, v in sorted(vote.items(), key=lambda item: item[1], reverse=True)} # Adapted from https://stackoverflow.com/questions/613183/how-do-i-sort-a-dictionary-by-value
-    
-    # Get the votes for each candidate, tally total votes
-    for c in vote:
-        total_votes += vote[c]
-
-    # Get pct votes for each candidate
-    for c in vote:
-        pct = 0
-        pct = vote[c] / total_votes
-        pct = "%.3f%%" % (pct * 100)
-        # Code adapted from a solution suggested here: https://stackoverflow.com/questions/5306756/how-to-print-a-percentage-value-in-python
-        pct_vote[c] = str(pct)
-        c = str(c) 
-
-#     # Print to terminal
-#     print("Election results")
-#     print("------------------") 
-
-#     # Print total votes
-
-#     print("Total Votes: " + str(total_votes))
-#     print("------------------") 
-
-    winner = ""
-    comparison = 0
-
-#     # Combine the dicts into one, print candidate totals
-
-    # final_tally = {}
-
-    for same in vote.keys() & pct_vote.keys():
-        name = same
-        pct_name = pct_vote[same]
-        vote_name = vote[same]
-        # print(name + ": " + pct_name + " (" + str(vote_name) + ")")    
-        if vote_name > comparison:
-            comparison = vote_name
-            winner = name
-        else:
+        if row[2] == "Khan":
+            k['votes'] += 1
+            total_votes += 1
+        elif row[2] == "Li":
+            l['votes'] += 1
+            total_votes += 1
+        elif row[2] == "Correy":
+            c['votes'] += 1
+            total_votes += 1
+        elif row[2] == "O\'Tooley":
+            o['votes'] += 1
+            total_votes += 1
+        else: 
             pass
 
-    # final_tally = {k: v for k, v in sorted(final_tally.items(), key=lambda item: item[1], reverse=True)} # Adapted from https://stackoverflow.com/questions/613183/how-do-i-sort-a-dictionary-by-value
+    # Append each dict to a list, to loop through dicts
+    results.append(k)
+    results.append(l)
+    results.append(c)
+    results.append(o)
     
+    # Tally percentage of vote for each candidate
+    for d in results:
+        d['pct'] = (d['votes'] / total_votes)
+        d['pct'] = "%.3f%%" % (d['pct'] * 100)
+        # Code adapted from a solution suggested here: https://stackoverflow.com/questions/5306756/how-to-print-a-percentage-value-in-python
+        d['pct'] = str(d['pct'])
+    
+    print(results)
 
-#     print("------------------") 
-#     print("Winner: " + winner)
-#     print("------------------") 
+    sorted_results = []
+    sorted_results = sorted(results, key = lambda i: i['votes'], reverse=True) # Adapted from https://www.geeksforgeeks.org/ways-sort-list-dictionaries-values-python-using-lambda-function/
+
+    # Print to terminal
+    print("Election results")
+    print("------------------") 
+
+    # Print total votes
+
+    print("Total Votes: " + str(total_votes))
+    print("------------------") 
+
+    # Print the results, formatted
+    for d in sorted_results:
+        print(d['name'] + ': ' + d['pct'] + ' (' + str(d['votes']) + ')')
+
+
+    print("------------------") 
+    print("Winner: " + sorted_results[0]['name'])
+    print("------------------") 
  
-#    # Print to text file
+# Print to text file
 
-#     # with open('./analysis.txt', 'w') as writefile:
-#     #     writefile.write("Election results\n")
-#     #     writefile.write("------------------\n")
-#     #     writefile.write("Total Votes: " + str(total_votes) + "\n")
-#     #     writefile.write("------------------\n")
+with open('./analysis.txt', 'w') as writefile:
+    writefile.write("Election results\n")
+    writefile.write("------------------\n")
+    writefile.write("Total Votes: " + str(total_votes) + "\n")
+    writefile.write("------------------\n")
 
-#     #     for same in vote.keys() & pct_vote.keys():
-#     #         name = same
-#     #         pct_name = pct_vote[same]
-#     #         vote_name = vote[same]
-#     #         writefile.write(name + ": " + pct_name + " (" + str(vote_name) + ")\n")    
-#     #         if vote_name > comparison:
-#     #             comparison = vote_name
-#     #             winner = name
-#     #         else:
-#     #             pass
+    for d in sorted_results:
+        writefile.write(d['name'] + ': ' + d['pct'] + ' (' + str(d['votes']) + ')\n')
 
-#     #     writefile.write("------------------\n") 
-#     #     writefile.write("Winner: " + winner + "\n")
-#     #     writefile.write("------------------\n") 
+    writefile.write("------------------\n") 
+    writefile.write("Winner: " + sorted_results[0]['name'] + "\n")
+    writefile.write("------------------\n") 
 
-#     #     writefile.close()
+    writefile.close()
