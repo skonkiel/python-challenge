@@ -1,6 +1,4 @@
-# python-challenge
-
-An assignment for the University of Minnesota Data Visualization and Analytics Bootcamp.
+# Python data analysis project
 
 This repository is comprised of two parts:
 
